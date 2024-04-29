@@ -119,7 +119,6 @@
         <setvar symbol="hw_ring_buffer_paddr" region_paddr="hw_ring_buffer" />
     </protection_domain>
 
-
     <protection_domain name="virt_rx" priority="99" pp="true">
         <program_image path="virt_rx.elf" />
         <map mr="rx_free_drv" vaddr="0x2_000_000" perms="rw" cached="true" setvar_vaddr="rx_free_drv" />
@@ -134,6 +133,30 @@
 
         <map mr="rx_buffer_data_region" vaddr="0x3_000_000" perms="r" cached="true" setvar_vaddr="buffer_data_vaddr" />
         <setvar symbol="buffer_data_paddr" region_paddr="rx_buffer_data_region" />
+    </protection_domain>
+
+    <protection_domain name="copy0" priority="98" budget="20000">
+        <program_image path="copy.elf" />
+        <map mr="rx_free_copy0" vaddr="0x2_000_000" perms="rw" cached="true" setvar_vaddr="rx_free_virt" />
+        <map mr="rx_active_copy0" vaddr="0x2_200_000" perms="rw" cached="true" setvar_vaddr="rx_active_virt" />
+
+        <map mr="rx_free_cli0" vaddr="0x2_400_000" perms="rw" cached="true" setvar_vaddr="rx_free_cli" />
+        <map mr="rx_active_cli0" vaddr="0x2_600_000" perms="rw" cached="true" setvar_vaddr="rx_active_cli" />
+
+        <map mr="rx_buffer_data_region" vaddr="0x2_800_000" perms="r" cached="true" setvar_vaddr="virt_buffer_data_region" />
+        <map mr="rx_buffer_data_region_cli0" vaddr="0x2_a00_000" perms="rw" cached="true" setvar_vaddr="cli_buffer_data_region" />
+    </protection_domain>
+
+    <protection_domain name="copy1" priority="96" budget="20000">
+        <program_image path="copy.elf" />
+        <map mr="rx_free_copy1" vaddr="0x2_000_000" perms="rw" cached="true" setvar_vaddr="rx_free_virt" />
+        <map mr="rx_active_copy1" vaddr="0x2_200_000" perms="rw" cached="true" setvar_vaddr="rx_active_virt" />
+
+        <map mr="rx_free_cli1" vaddr="0x2_400_000" perms="rw" cached="true" setvar_vaddr="rx_free_cli" />
+        <map mr="rx_active_cli1" vaddr="0x2_600_000" perms="rw" cached="true" setvar_vaddr="rx_active_cli" />
+
+        <map mr="rx_buffer_data_region" vaddr="0x2_800_000" perms="r" cached="true" setvar_vaddr="virt_buffer_data_region" />
+        <map mr="rx_buffer_data_region_cli1" vaddr="0x2_a00_000" perms="rw" cached="true" setvar_vaddr="cli_buffer_data_region" />
     </protection_domain>
 
     <protection_domain name="virt_tx" priority="100" budget="20000">
