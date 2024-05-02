@@ -153,9 +153,6 @@ init(void)
     const_dev_paths, DEV_PATH_COUNT);
 
     printf("Completed uboot driver setup\n");
-
-    // Loop forever
-    while (1);
 }
 
 void
