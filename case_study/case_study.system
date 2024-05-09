@@ -73,6 +73,9 @@
     <memory_region name="tx_active_cli1" size="0x200_000" page_size="0x200_000"/>
 
     <memory_region name="cyclecounters" size="0x1000"/>
+
+    <!-- Dataport buffer -->
+    <memory_region name="circular_buffer_data" size="0x10000"/>
     
     <protection_domain name="case_study" priority="254">
         <map mr="timer_reg_mem" vaddr="0x306a0000" perms="rw" cached="false"/>
@@ -235,6 +238,11 @@
             <program_image path="timer.elf" />
             <map mr="timer" vaddr="0x2_000_000" perms="rw" cached="false" setvar_vaddr="gpt_regs" />
             <irq irq="87" id="0" /> <!-- timer interrupt -->
+        </protection_domain>
+
+        <protection_domain name="transmitter" priority="101" pp="true" id="10" passive="true">
+            <program_image path="transmitter.elf" />
+            <map mr="circular_buffer_data" vaddr="0x5_000_000" perms="rw" cached="false" setvar_vaddr="circular_buffer_data" />
         </protection_domain>
     </protection_domain>
 
