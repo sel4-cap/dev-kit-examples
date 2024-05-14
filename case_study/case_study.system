@@ -47,8 +47,6 @@
 
     <memory_region name="data_packet" size="0x1000"/>
 
-    <memory_region name="ethernet" size="0x10000"/>
-    
     <protection_domain name="case_study" priority="254">
         <map mr="timer_reg_mem" vaddr="0x306a0000" perms="rw" cached="false"/>
         <map mr="clock-controller_mem" vaddr="0x30380000" perms="rw" cached="false"/>
@@ -78,9 +76,9 @@
         <program_image path="case_study.elf" />  
     </protection_domain>
 
-    <protection_domain name="eth" priority="100" pp="true">
+    <protection_domain name="eth" priority="100" budget="160" period="300" pp="true">
         <program_image path="eth.elf" />
-        <!-- <map mr="ethernet_mem" vaddr="0x2_000_000" perms="rw" cached="false"/> -->
+        <map mr="ethernet_mem" vaddr="0x30be0000" perms="rw" cached="false"/>
 
         <map mr="hw_ring_buffer" vaddr="0x3_000_000" perms="rw" cached="false" setvar_vaddr="hw_ring_buffer_vaddr" />
 
@@ -95,8 +93,6 @@
 
         <map mr="shared_dma" vaddr="0x2_400_000" perms="rw" cached="true" setvar_vaddr="shared_dma_vaddr" />
 
-        <map mr="ethernet_mem" vaddr="0x30be0000" perms="rw" cached="false"/>
-
         <irq irq="152" id="1" /> <!-- ethernet interrupt -->
 
         <!-- we need physical addresses of hw rings and dma region -->
@@ -104,7 +100,7 @@
         <setvar symbol="shared_dma_paddr" region_paddr="shared_dma" />
     </protection_domain>
 
-    <protection_domain name="lwip" priority="10" pp="true">
+    <protection_domain name="lwip" priority="10" budget="20000">
         <program_image path="lwip.elf" />
 
         <map mr="timer" vaddr="0x2_000_000" perms="rw" cached="false" setvar_vaddr="gpt_regs" />
