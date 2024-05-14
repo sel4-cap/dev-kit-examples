@@ -78,9 +78,9 @@
         <program_image path="case_study.elf" />  
     </protection_domain>
 
-    <protection_domain name="eth" priority="10" pp="true">
+    <protection_domain name="eth" priority="100" pp="true">
         <program_image path="eth.elf" />
-        <map mr="ethernet_mem" vaddr="0x2_000_000" perms="rw" cached="false"/>
+        <!-- <map mr="ethernet_mem" vaddr="0x2_000_000" perms="rw" cached="false"/> -->
 
         <map mr="hw_ring_buffer" vaddr="0x3_000_000" perms="rw" cached="false" setvar_vaddr="hw_ring_buffer_vaddr" />
 
@@ -95,7 +95,7 @@
 
         <map mr="shared_dma" vaddr="0x2_400_000" perms="rw" cached="true" setvar_vaddr="shared_dma_vaddr" />
 
-        <map mr="ethernet" vaddr="0x62000000" perms="rw" cached="true"/>
+        <map mr="ethernet_mem" vaddr="0x30be0000" perms="rw" cached="false"/>
 
         <irq irq="152" id="1" /> <!-- ethernet interrupt -->
 
