@@ -133,6 +133,57 @@ uintptr_t dma_base;
 uintptr_t dma_cp_paddr;
 size_t dma_size = 0x100000;
 
+/* A buffer of encrypted characters to log to the SD/MMC card */
+#define MMC_TX_BUF_LEN 4096
+char mmc_pending_tx_buf[MMC_TX_BUF_LEN];
+uint mmc_pending_length = 0;
+
+#define LOG_FILE_DEVICE "mmc 0:1"  // Partition 1 on mmc device 0
+#define LOG_FILENAME  "log.txt"
+
+
+void write_pending_mmc_log(void)
+{
+    /* Track the total number of bytes written to the log file*/
+    static uint total_bytes_written = 0;
+
+    /* Write all keypresses stored in the 'mmc_pending_tx_buf' buffer to the log file */
+    char uboot_cmd[64];
+    sprintf(uboot_cmd, "fatwrite %s 0x%x %s %x %x",
+        LOG_FILE_DEVICE,        // The U-Boot partition designation
+        &mmc_pending_tx_buf,    // Address of the buffer to write
+        LOG_FILENAME,           // Filename to log to
+        mmc_pending_length,     // The number of bytes to write
+        0);   // The offset in the file to start writing from
+    int ret = run_uboot_command(uboot_cmd);
+
+    /* Clear the buffer if writing to the file was successful */
+    if (ret >= 0) {
+        total_bytes_written += mmc_pending_length;
+
+        /* All pending characters have now been sent. Clear the buffer */
+        memset(mmc_pending_tx_buf, 0, mmc_pending_length);
+        mmc_pending_length = 0;
+    }
+}
+
+void handle_keypress(void) {
+    printf("Reading input from the USB keyboard:\n");
+    for (int x = 0; x <= 1000; x++) {
+        while (uboot_stdin_tstc() > 0) {
+            char c = uboot_stdin_getc();
+            printf("Received character: %c\n", c, stdout);
+            
+            // Add character to MMC buffer
+            if (mmc_pending_length < MMC_TX_BUF_LEN) {
+                mmc_pending_tx_buf[mmc_pending_length++] = c;
+            }
+        }
+        udelay(10000);
+    }
+    write_pending_mmc_log();
+}
+
 void
 init(void)
 {
@@ -140,7 +191,7 @@ init(void)
 
     // Initalise DMA manager
     microkit_dma_manager(&dma_manager);
-
+    
     // Initialise DMA
     microkit_dma_init(dma_base, dma_size,
         4096, 1);
@@ -152,7 +203,26 @@ init(void)
     /* List the device tree paths for the devices */
     const_dev_paths, DEV_PATH_COUNT);
 
-    printf("Completed uboot driver setup\n");
+    /* Set USB keyboard as input device */
+    int ret = run_uboot_command("setenv stdin usbkbd");
+    if (ret < 0) {
+        assert(!"Failed to set USB keyboard as the input device");
+    }
+
+    /* Start the USB subsystem */
+    ret = run_uboot_command("usb start");
+    if (ret < 0) {
+        assert(!"Failed to start USB driver");
+    }
+
+    /* Delete any existing log file to ensure we start with an empty file */
+    char uboot_cmd[64];
+    sprintf(uboot_cmd, "fatrm %s %s", LOG_FILE_DEVICE, LOG_FILENAME);
+    run_uboot_command(uboot_cmd);
+    
+    handle_keypress();
+
+    return 0;
 }
 
 void
