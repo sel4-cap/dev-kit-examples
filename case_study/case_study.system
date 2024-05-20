@@ -189,12 +189,12 @@
 
     </protection_domain> 
 
-    <!-- <protection_domain name="cryto" priority="253">
-        <program_image path="cryto.elf" />
+    <protection_domain name="crypto" priority="253">
+        <program_image path="crypto.elf" />
 
         <map mr="data_packet" vaddr="0x5_011_000" perms="rw" cached="true" setvar_vaddr="data_packet" />
 
-    </protection_domain> -->
+    </protection_domain>
 
     <channel>
         <end pd="eth" id="2" />
