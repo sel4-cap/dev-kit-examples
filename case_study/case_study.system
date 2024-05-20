@@ -156,7 +156,7 @@
 
     </protection_domain>
 
-    <protection_domain name="transmitter" priority="253">
+    <protection_domain name="transmitter" priority="252">
         <program_image path="transmitter.elf" />
 
         <map mr="timer_reg_mem" vaddr="0x306a0000" perms="rw" cached="false"/>
@@ -188,6 +188,13 @@
         <map mr="data_packet" vaddr="0x5_011_000" perms="rw" cached="true" setvar_vaddr="data_packet" />
 
     </protection_domain> 
+
+    <!-- <protection_domain name="cryto" priority="253">
+        <program_image path="cryto.elf" />
+
+        <map mr="data_packet" vaddr="0x5_011_000" perms="rw" cached="true" setvar_vaddr="data_packet" />
+
+    </protection_domain> -->
 
     <channel>
         <end pd="eth" id="2" />

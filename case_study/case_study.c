@@ -36,7 +36,7 @@
     extern                              const char incbin_ ## name ## _end[] 
 INCBIN(device_tree, DTB_PATH); 
 
-const char* _end = incbin_device_tree_end;
+// const char* _end = incbin_device_tree_end;
 
 #define REG_TIMER_PATH      "/soc@0/bus@30400000/timer@306a0000"
 #define REG_CCM_PATH        "/soc@0/bus@30000000/clock-controller@30380000"
@@ -187,40 +187,21 @@ void handle_keypress(void) {
 void
 init(void)
 {
-    const char *const_dev_paths[] = DEV_PATHS;
+    // const char *const_dev_paths[] = DEV_PATHS;
 
-    // Initalise DMA manager
-    microkit_dma_manager(&dma_manager);
+    // // Initalise DMA manager
+    // microkit_dma_manager(&dma_manager);
     
-    // Initialise DMA
-    microkit_dma_init(dma_base, dma_size,
-        4096, 1);
+    // // Initialise DMA
+    // microkit_dma_init(dma_base, dma_size,
+    //     4096, 1);
 
-    // Initialise uboot library
-    initialise_uboot_drivers(
-    dma_manager,
-    incbin_device_tree_start,
-    /* List the device tree paths for the devices */
-    const_dev_paths, DEV_PATH_COUNT);
-
-    /* Set USB keyboard as input device */
-    int ret = run_uboot_command("setenv stdin usbkbd");
-    if (ret < 0) {
-        assert(!"Failed to set USB keyboard as the input device");
-    }
-
-    /* Start the USB subsystem */
-    ret = run_uboot_command("usb start");
-    if (ret < 0) {
-        assert(!"Failed to start USB driver");
-    }
-
-    /* Delete any existing log file to ensure we start with an empty file */
-    char uboot_cmd[64];
-    sprintf(uboot_cmd, "fatrm %s %s", LOG_FILE_DEVICE, LOG_FILENAME);
-    run_uboot_command(uboot_cmd);
-    
-    handle_keypress();
+    // // Initialise uboot library
+    // initialise_uboot_drivers(
+    // dma_manager,
+    // incbin_device_tree_start,
+    // /* List the device tree paths for the devices */
+    // const_dev_paths, DEV_PATH_COUNT);
 
     return 0;
 }
