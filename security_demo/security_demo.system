@@ -187,7 +187,7 @@
 
     </protection_domain> 
 
-    <protection_domain name="crypto" priority="253">
+    <protection_domain name="crypto" priority="253" pp="true">
         <program_image path="crypto.elf" />
 
         <map mr="data_packet" vaddr="0x5_011_000" perms="rw" cached="true" setvar_vaddr="data_packet" />
@@ -201,6 +201,11 @@
     <channel>
         <end pd="lwip" id="4" />
         <end pd="eth" id="4" />
+    </channel>
+
+    <channel>
+        <end pd="keyreader" id="5" />
+        <end pd="crypto" id="5" />
     </channel>
 
 </system>
