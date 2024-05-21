@@ -47,6 +47,10 @@
 
     <memory_region name="data_packet" size="0x1000"/>
 
+    <!-- Keyboard ring -->
+    <memory_region name="ring_mem" size="0x2_000_000"/>
+    <memory_region name="kbd_ring_buffer" size="0x1_000" />
+
     <!-- <protection_domain name="case_study" priority="250">
         <map mr="timer_reg_mem" vaddr="0x306a0000" perms="rw" cached="false"/>
         <map mr="clock-controller_mem" vaddr="0x30380000" perms="rw" cached="false"/>
@@ -191,6 +195,10 @@
         <program_image path="crypto.elf" />
 
         <map mr="data_packet" vaddr="0x5_011_000" perms="rw" cached="true" setvar_vaddr="data_packet" />
+
+        <setvar symbol="ring_cp_paddr" region_paddr="ring_mem" />
+        <map mr="ring_mem" vaddr="0x6000_0000" perms="rw" cached="true" setvar_vaddr="ring_base"/>
+        <setvar symbol="kbd_ring_buffer_paddr" region_paddr="kbd_ring_buffer" />
 
     </protection_domain>
 
