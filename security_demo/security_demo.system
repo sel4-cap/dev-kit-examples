@@ -132,7 +132,7 @@
         <map mr="usb_2_mem" vaddr="0x38200000" perms="rw" cached="false"/>
         <map mr="usb_2_phy_mem" vaddr="0x382f0000" perms="rw" cached="false"/>
         <map mr="mmc_mem" vaddr="0x30b40000" perms="rw" cached="false"/>
-        <!-- <map mr="ethernet_mem" vaddr="0x30be0000" perms="rw" cached="false"/> -->
+        <map mr="ethernet_mem" vaddr="0x30be0000" perms="rw" cached="false"/>
         <map mr="gpio_1_mem" vaddr="0x30200000" perms="rw" cached="false" />
         <map mr="gpio_2_mem" vaddr="0x30210000" perms="rw" cached="false" />
         <map mr="gpio_3_mem" vaddr="0x30220000" perms="rw" cached="false" />
@@ -165,7 +165,7 @@
         <map mr="usb_2_mem" vaddr="0x38200000" perms="rw" cached="false"/>
         <map mr="usb_2_phy_mem" vaddr="0x382f0000" perms="rw" cached="false"/>
         <map mr="mmc_mem" vaddr="0x30b40000" perms="rw" cached="false"/>
-        <!-- <map mr="ethernet_mem" vaddr="0x30be0000" perms="rw" cached="false"/> -->
+        <map mr="ethernet_mem" vaddr="0x30be0000" perms="rw" cached="false"/>
         <map mr="gpio_1_mem" vaddr="0x30200000" perms="rw" cached="false" />
         <map mr="gpio_2_mem" vaddr="0x30210000" perms="rw" cached="false" />
         <map mr="gpio_3_mem" vaddr="0x30220000" perms="rw" cached="false" />
