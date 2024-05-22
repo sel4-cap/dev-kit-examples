@@ -36,11 +36,11 @@
     <memory_region name="hw_ring_buffer" size="0x1_000" />
     <memory_region name="shared_dma" size="0x200_000" page_size="0x200_000" />
 
-    <!-- shared memory for ring buffer mechanism -->
-    <memory_region name="rx_free" size="0x200_000" page_size="0x200_000"/>
-    <memory_region name="rx_used" size="0x200_000" page_size="0x200_000"/>
-    <memory_region name="tx_free" size="0x200_000" page_size="0x200_000"/>
-    <memory_region name="tx_used" size="0x200_000" page_size="0x200_000"/>
+    <!-- shared memory for ethernet ring buffer mechanism -->
+    <memory_region name="eth_rx_free" size="0x200_000" page_size="0x200_000"/>
+    <memory_region name="eth_rx_used" size="0x200_000" page_size="0x200_000"/>
+    <memory_region name="eth_tx_free" size="0x200_000" page_size="0x200_000"/>
+    <memory_region name="eth_tx_used" size="0x200_000" page_size="0x200_000"/>
 
     <memory_region name="rx_cookies" size="0x200_000" page_size="0x200_000"/>
     <memory_region name="tx_cookies" size="0x200_000" page_size="0x200_000"/>
@@ -50,6 +50,12 @@
     <!-- Keyboard ring -->
     <memory_region name="ring_mem" size="0x2_000_000"/>
     <memory_region name="kbd_ring_buffer" size="0x1_000" />
+
+    <!-- shared memory for keyboard ring buffer mechanism -->
+    <memory_region name="rx_free" size="0x200_000" page_size="0x200_000"/>
+    <memory_region name="rx_used" size="0x200_000" page_size="0x200_000"/>
+    <memory_region name="tx_free" size="0x200_000" page_size="0x200_000"/>
+    <memory_region name="tx_used" size="0x200_000" page_size="0x200_000"/>
 
     <!-- <protection_domain name="case_study" priority="250">
         <map mr="timer_reg_mem" vaddr="0x306a0000" perms="rw" cached="false"/>
@@ -125,7 +131,7 @@
         <irq irq="87" id="1" /> <!-- timer interrupt -->
     </protection_domain>
 
-    <protection_domain name="keyreader" priority="254">
+    <protection_domain name="keyreader" priority="24">
         <program_image path="keyreader.elf" />
 
         <map mr="timer_reg_mem" vaddr="0x306a0000" perms="rw" cached="false"/>
@@ -158,7 +164,7 @@
 
     </protection_domain>
 
-    <protection_domain name="transmitter" priority="252">
+    <protection_domain name="transmitter" priority="22">
         <program_image path="transmitter.elf" />
 
         <map mr="timer_reg_mem" vaddr="0x306a0000" perms="rw" cached="false"/>
@@ -191,7 +197,7 @@
 
     </protection_domain> 
 
-    <protection_domain name="crypto" priority="253" pp="true">
+    <protection_domain name="crypto" priority="23" pp="true">
         <program_image path="crypto.elf" />
 
         <map mr="data_packet" vaddr="0x5_011_000" perms="rw" cached="true" setvar_vaddr="data_packet" />
@@ -199,6 +205,12 @@
         <setvar symbol="ring_cp_paddr" region_paddr="ring_mem" />
         <map mr="ring_mem" vaddr="0x6000_0000" perms="rw" cached="true" setvar_vaddr="ring_base"/>
         <setvar symbol="kbd_ring_buffer_paddr" region_paddr="kbd_ring_buffer" />
+
+        <!-- shared memory for ring buffer mechanism -->
+        <map mr="rx_free" vaddr="0x4_000_000" perms="rw" cached="true" setvar_vaddr="rx_free" />
+        <map mr="rx_used" vaddr="0x4_200_000" perms="rw" cached="true" setvar_vaddr="rx_used" />
+        <map mr="tx_free" vaddr="0x4_400_000" perms="rw" cached="true" setvar_vaddr="tx_free" />
+        <map mr="tx_used" vaddr="0x4_600_000" perms="rw" cached="true" setvar_vaddr="tx_used" />
 
     </protection_domain>
 
@@ -214,6 +226,11 @@
     <channel>
         <end pd="keyreader" id="5" />
         <end pd="crypto" id="5" />
+    </channel>
+
+    <channel>
+        <end pd="crypto" id="6" />
+        <end pd="lwip" id="6" />
     </channel>
 
 </system>
