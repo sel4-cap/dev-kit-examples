@@ -29,7 +29,7 @@
     <memory_region name="spi_0_mem" size="0x10000" phys_addr="0x30820000"/>
     <memory_region name="timer_mem" size="0x20000" phys_addr="0x306c0000"/>
 
-    <memory_region name="data_packet" size="0x1000"/>
+    <memory_region name="data_buffer" size="0x10000"/>
 
     <protection_domain name="keyreader" priority="24">
         <program_image path="keyreader.elf" />
@@ -59,11 +59,11 @@
 
         <setvar symbol="dma_cp_paddr" region_paddr="dma_pool" />
 
-        <map mr="data_packet" vaddr="0x5_011_000" perms="rw" cached="true" setvar_vaddr="data_packet" />
+        <map mr="data_buffer" vaddr="0x5_011_000" perms="rw" setvar_vaddr="data_buffer" />
 
     </protection_domain>
 
-    <protection_domain name="transmitter" priority="22">
+    <protection_domain name="transmitter" priority="22" pp="true">
         <program_image path="transmitter.elf" />
 
         <map mr="timer_reg_mem" vaddr="0x306a0000" perms="rw" cached="false"/>
@@ -91,20 +91,25 @@
 
         <setvar symbol="dma_cp_paddr" region_paddr="dma_pool" />
 
-        <map mr="data_packet" vaddr="0x5_011_000" perms="rw" cached="true" setvar_vaddr="data_packet" />
+        <map mr="data_buffer" vaddr="0x5_011_000" perms="rw" setvar_vaddr="data_buffer" />
 
     </protection_domain> 
 
     <protection_domain name="crypto" priority="23" pp="true">
         <program_image path="crypto.elf" />
 
-        <map mr="data_packet" vaddr="0x5_011_000" perms="rw" cached="true" setvar_vaddr="data_packet" />
+        <map mr="data_buffer" vaddr="0x5_011_000" perms="rw" setvar_vaddr="data_buffer" />
 
     </protection_domain>
 
     <channel>
         <end pd="keyreader" id="5" />
         <end pd="crypto" id="5" />
+    </channel>
+
+    <channel>
+        <end pd="crypto" id="6" />
+        <end pd="transmitter" id="6" />
     </channel>
 
 </system>
