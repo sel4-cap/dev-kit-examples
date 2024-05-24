@@ -59,8 +59,6 @@
 
         <setvar symbol="dma_cp_paddr" region_paddr="dma_pool" />
 
-        <map mr="data_buffer" vaddr="0x5_011_000" perms="rw" setvar_vaddr="data_buffer" />
-
     </protection_domain>
 
     <protection_domain name="transmitter" priority="22" pp="true">
