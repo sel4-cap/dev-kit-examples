@@ -30,6 +30,7 @@
     <memory_region name="timer_mem" size="0x20000" phys_addr="0x306c0000"/>
 
     <memory_region name="data_buffer" size="0x10000"/>
+    <memory_region name="circular_buffer" size="0x10000"/>
 
     <protection_domain name="keyreader" priority="24">
         <program_image path="keyreader.elf" />
@@ -63,14 +64,16 @@
 
         <setvar symbol="dma_cp_paddr" region_paddr="dma_pool" />
 
-        <map mr="data_buffer" vaddr="0x5_011_000" perms="rw" setvar_vaddr="data_buffer" />
+        <map mr="data_buffer" vaddr="0x6_000_000" perms="rw" setvar_vaddr="data_buffer" />
+        <map mr="circular_buffer" vaddr="0x6_010_000" perms="rw" setvar_vaddr="circular_buffer" />
 
     </protection_domain> 
 
     <protection_domain name="crypto" priority="23" pp="true">
         <program_image path="crypto.elf" />
 
-        <map mr="data_buffer" vaddr="0x5_011_000" perms="rw" setvar_vaddr="data_buffer" />
+        <map mr="data_buffer" vaddr="0x6_011_000" perms="rw" setvar_vaddr="data_buffer" />
+        <map mr="circular_buffer" vaddr="0x6_010_000" perms="rw" setvar_vaddr="circular_buffer" />
 
     </protection_domain>
 
