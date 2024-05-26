@@ -49,7 +49,7 @@
 
     </protection_domain>
 
-    <protection_domain name="transmitter" priority="22" pp="true">
+    <protection_domain name="transmitter" priority="25" pp="true">
         <program_image path="transmitter.elf" />
 
         <map mr="timer_reg_mem" vaddr="0x306a0000" perms="rw" cached="false"/>
