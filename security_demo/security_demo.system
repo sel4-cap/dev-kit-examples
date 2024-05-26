@@ -87,4 +87,9 @@
         <end pd="transmitter" id="6" />
     </channel>
 
+    <channel>
+        <end pd="transmitter" id="7" />
+        <end pd="keyreader" id="7" />
+    </channel>
+
 </system>
