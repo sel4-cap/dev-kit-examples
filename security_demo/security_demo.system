@@ -50,8 +50,8 @@
         <map mr="syscon_mem" vaddr="0x30360000" perms="rw" cached="false" />
         <map mr="mmc_mem" vaddr="0x30b40000" perms="rw" cached="false"/>
         <map mr="timer_mem" vaddr="0x306c0000" perms="rw" cached="false"/>
-        <map mr="heap_mem_1" vaddr="0x50000000" perms="rw" cached="true" setvar_vaddr="__heap_start_1"/>
-        <map mr="heap_end_1" vaddr="0x52000000" perms="rw" cached="false" setvar_vaddr="__heap_end_1"/>
+        <map mr="heap_mem_1" vaddr="0x50000000" perms="rw" cached="true" setvar_vaddr="__heap_start"/>
+        <map mr="heap_end_1" vaddr="0x52000000" perms="rw" cached="false" setvar_vaddr="__heap_end"/>
         <map mr="dma_pool_2" vaddr="0x56000000" perms="rw" cached="true" setvar_vaddr="dma_base_2"/>
 
         <setvar symbol="dma_cp_paddr_2" region_paddr="dma_pool_2" />
