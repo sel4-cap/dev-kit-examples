@@ -230,13 +230,13 @@ init(void)
 
     // Flash the LEDs
     for (int x=0; x<4; x++) {
-        mdelay(125);
+        wrap_mdelay(125);
         run_uboot_command("led "TEST_LED_NAME_1" off");
-        mdelay(125);
+        wrap_mdelay(125);
         run_uboot_command("led "TEST_LED_NAME_2" on");
-        mdelay(125);
+        wrap_mdelay(125);
         run_uboot_command("led "TEST_LED_NAME_1" on");
-        mdelay(125);
+        wrap_mdelay(125);
         run_uboot_command("led "TEST_LED_NAME_2" off");
     }
     #endif
