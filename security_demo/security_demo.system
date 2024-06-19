@@ -35,9 +35,9 @@
         <map mr="timer_mem" vaddr="0x306c0000" perms="rw" cached="false"/>
         <map mr="heap_mem" vaddr="0x50000000" perms="rw" cached="true" setvar_vaddr="__heap_start"/>
         <map mr="heap_end" vaddr="0x52000000" perms="rw" cached="false" setvar_vaddr="__heap_end"/>
-        <map mr="dma_pool_1" vaddr="0x54000000" perms="rw" cached="true" setvar_vaddr="dma_base_1"/>
+        <map mr="dma_pool_1" vaddr="0x54000000" perms="rw" cached="true" setvar_vaddr="dma_base"/>
 
-        <setvar symbol="dma_cp_paddr_1" region_paddr="dma_pool_1" />
+        <setvar symbol="dma_cp_paddr" region_paddr="dma_pool_1" />
 
     </protection_domain>
 
@@ -52,9 +52,9 @@
         <map mr="timer_mem" vaddr="0x306c0000" perms="rw" cached="false"/>
         <map mr="heap_mem_1" vaddr="0x50000000" perms="rw" cached="true" setvar_vaddr="__heap_start"/>
         <map mr="heap_end_1" vaddr="0x52000000" perms="rw" cached="false" setvar_vaddr="__heap_end"/>
-        <map mr="dma_pool_2" vaddr="0x56000000" perms="rw" cached="true" setvar_vaddr="dma_base_2"/>
+        <map mr="dma_pool_2" vaddr="0x56000000" perms="rw" cached="true" setvar_vaddr="dma_base"/>
 
-        <setvar symbol="dma_cp_paddr_2" region_paddr="dma_pool_2" />
+        <setvar symbol="dma_cp_paddr" region_paddr="dma_pool_2" />
 
         <map mr="data_buffer" vaddr="0x6_000_000" perms="rw" setvar_vaddr="data_buffer" />
         <map mr="circular_buffer" vaddr="0x6_010_000" perms="rw" setvar_vaddr="circular_buffer" />
